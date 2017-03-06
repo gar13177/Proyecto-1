@@ -122,6 +122,7 @@ Temporary Items
 # Windows image file caches
 Thumbs.db
 ehthumbs.db
+/.vscode
 
 # Folder config file
 Desktop.ini
