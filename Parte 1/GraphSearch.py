@@ -21,6 +21,8 @@ class GraphSearch():
 
     
     def graphSearch(self, problem):
+        if self.type == 1: return self.gSDFS(problem)
+        
         frontier = [[problem.initVal_pos]]
         explored = []
         
@@ -50,3 +52,29 @@ class GraphSearch():
         #else:
             #return []
         return []
+
+    def gSDFS(self,problem):
+        frontier = [[problem.initVal_pos]]
+        explored = []
+
+        while frontier:
+            path = frontier.pop()#saco el primero
+            s = path[-1]#ultimo vertice
+            if s not in explored:
+                explored.append(s)
+
+                if problem.goalTest(s):
+                    return path
+
+                for a in problem.actions(s):
+
+                    result = problem.result(s,a)
+
+                    new_path = []
+                    new_path.extend(path)
+                    new_path.append(result)
+                    frontier.append(new_path)
+
+        return []
+                
+                

@@ -46,15 +46,26 @@ class Problem():
     def heuristic1(self, position):
         if not any(self.goalVal in sublist for sublist in self.pathArray):
             return 0
-        searchPos = [[index,row.index(self.goalVal)] for index, row in enumerate(self.pathArray) if self.goalVal in row][0]
-        return 0.5*(abs(position[0]-searchPos[0])+abs(position[1]-searchPos[1]))
+        # = [[index,row.index(self.goalVal)] for index, row in enumerate(self.pathArray) if self.goalVal in row][0]
+        
+        #return 0.5*(abs(position[0]-searchPos[0])+abs(position[1]-searchPos[1]))
+        positions = [[index,row.index(self.goalVal)] for index, row in enumerate(self.pathArray) if self.goalVal in row]
+        result = []
+        for searchPos in positions:
+            result.append(0.5*(abs(position[0]-searchPos[0])+abs(position[1]-searchPos[1])))
+        return min(result)
         
         
     def heuristic2(self, position):
         if not any(self.goalVal in sublist for sublist in self.pathArray):
             return 0
-        searchPos = [[index,row.index(self.goalVal)] for index, row in enumerate(self.pathArray) if self.goalVal in row][0]
-        return sqrt((position[0]-searchPos[0])**2+(position[1]-searchPos[1])**2)
+        #searchPos = [[index,row.index(self.goalVal)] for index, row in enumerate(self.pathArray) if self.goalVal in row][0]
+        #return sqrt((position[0]-searchPos[0])**2+(position[1]-searchPos[1])**2)
+        positions = [[index,row.index(self.goalVal)] for index, row in enumerate(self.pathArray) if self.goalVal in row]
+        result = []
+        for searchPos in positions:
+            result.append(sqrt((position[0]-searchPos[0])**2+(position[1]-searchPos[1])**2))
+        return min(result)
 
     
 
