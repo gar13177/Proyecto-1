@@ -1,13 +1,19 @@
+from math import sqrt
 class Problem():
-
+    hasError = False
     pathArray = []
     initVal_pos = []
     goalVal = 0
     wallVal = 0
+    error = ""
 
     def __init__(self, array, initVal, goalVal, wallVal):
         self.pathArray = array
-        self.initVal_pos = [[index,row.index(initVal)] for index, row in enumerate(array) if initVal in row][0]
+        if any(initVal in sublist for sublist in array):
+            self.initVal_pos = [[index,row.index(initVal)] for index, row in enumerate(array) if initVal in row][0]
+        else:
+            self.hasError = True
+            self.error = "no se encuentra punto de inicio"
         self.goalVal = goalVal
         self.wallVal = wallVal
 
@@ -36,6 +42,20 @@ class Problem():
         for i in range(len(path)-1):
             cost += abs(path[i][0]-path[i+1][0]) + abs(path[i][1]-path[i+1][1])
         return cost
+
+    def heuristic1(self, position):
+        if not any(self.goalVal in sublist for sublist in self.pathArray):
+            return 0
+        searchPos = [[index,row.index(self.goalVal)] for index, row in enumerate(self.pathArray) if self.goalVal in row][0]
+        return 0.5*(abs(position[0]-searchPos[0])+abs(position[1]-searchPos[1]))
+        
+        
+    def heuristic2(self, position):
+        if not any(self.goalVal in sublist for sublist in self.pathArray):
+            return 0
+        searchPos = [[index,row.index(self.goalVal)] for index, row in enumerate(self.pathArray) if self.goalVal in row][0]
+        return sqrt((position[0]-searchPos[0])**2+(position[1]-searchPos[1])**2)
+
     
 
         

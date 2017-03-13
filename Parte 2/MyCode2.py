@@ -1,10 +1,12 @@
-from BayesGrammarUserListener import BayesGrammarUserListener
+from BayesUser.BayesGrammarUserListener import BayesGrammarUserListener
 
 class BayesUserListener(BayesGrammarUserListener):
     variables = []
     probability = []
 
     def enterProgram(self, ctx):
+        self.variables = []
+        self.probability = []
         self.probability = self.enterProbability(ctx.probability())
 
     def enterProbability(self, ctx):

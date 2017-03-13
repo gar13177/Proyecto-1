@@ -4,7 +4,7 @@ class GraphSearch():
     def __init__(self, type=0):
         self.type = type
 
-    def removeChoice(self, frontier):
+    def removeChoice(self, frontier,problem):
         if self.type == 0:#bfs
             index = frontier.index(min(frontier, key = lambda x: len(x)))
             return index
@@ -12,7 +12,11 @@ class GraphSearch():
             index = frontier.index(max(frontier, key = lambda x: len(x)))
             return index
         elif self.type == 2:#a*
-            return 0
+            index = frontier.index(min(frontier, key= lambda x: problem.heuristic1(x[-1])))
+            return index
+        elif self.type == 3:#a*2
+            index = frontier.index(min(frontier, key= lambda x: problem.heuristic2(x[-1])))
+            return index
         return -1
 
     
@@ -24,7 +28,7 @@ class GraphSearch():
         #while True:
             #print explored
         #if len(frontier):
-            index = self.removeChoice(frontier)
+            index = self.removeChoice(frontier,problem)
             if index == -1: return []
             path = frontier.pop(index)
             s = path[-1]

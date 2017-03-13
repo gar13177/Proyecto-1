@@ -10,6 +10,7 @@ class ImageMap():
     pathArray = []#matriz discretizada
     blockNum = 0#numero de bloques para la division (siempre toma la cantidad para min(width, height))
     colors = {
+        "orange": 5,
         "blue": 4,
         "red": 3,
         "green": 2,
@@ -17,6 +18,7 @@ class ImageMap():
         "white": 0
         }#diccionario de colores
     colorsValue = {
+        "orange": (255,99,71,255),
         "blue": (0, 0, 255, 255),
         "red": (255, 0, 0, 255),
         "green": (0, 255, 0, 255),
@@ -63,7 +65,7 @@ class ImageMap():
     def classify(self, rgb_tuple):
         colors = self.colorsValue
         manhattan = lambda x,y : abs(x[0] - y[0]) + abs(x[1] - y[1]) + abs(x[2] - y[2]) 
-        distances = {k: manhattan(v, rgb_tuple) for k, v in colors.items()}
+        distances = {k: manhattan(v, rgb_tuple) for k, v in colors.items() if k in ("white", "black", "green", "red")}
         color = min(distances, key=distances.get)
         return color
 
@@ -96,6 +98,7 @@ class ImageMap():
             self.pathArray = pathArray
 
     def getColor(self, value):
+        #if value == 5: return (255,99,71,255)
         if value == 4: return (0, 0, 255, 255)
         if value == 3: return (255, 0, 0, 255)
         if value == 2: return (0, 255, 0, 255)
@@ -103,12 +106,13 @@ class ImageMap():
         return (255, 255, 255, 255)
 
     def savePathAsImage(self, path="path.png"):
-        im = Image.new('RGBA',self.imgOriginal.size)
+        im = Image.new('RGBA',(300,300))#self.imgOriginal.size)
         array = im.load()
-        reference = min(self.imgOriginal.size)/self.blockNum
-        for j in range(im.size[1]-im.size[1]%reference):
-            for i in range(im.size[0]-im.size[0]%reference):
-                array[i,j] = self.getColor(self.pathArray[j/reference][i/reference])
+        reference_x = im.size[0]/len(self.pathArray[0])
+        reference_y = im.size[1]/len(self.pathArray)#min(im.size)/self.blockNum
+        for j in range(len(self.pathArray)*reference_y):#im.size[1]-im.size[1]%reference_y):
+            for i in range(len(self.pathArray[0])*reference_x):#im.size[0]-im.size[0]%reference_x):
+                array[i,j] = self.getColor(self.pathArray[j/reference_y][i/reference_x])
         im.save(path)
 
     def imageUpdatePath(self, path):

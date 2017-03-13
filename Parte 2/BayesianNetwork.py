@@ -97,7 +97,9 @@ class BayesianNetwork ():
     def enumeration(self, probability, variables):
         #probability es como lo da el parser [[[]]]
         #variables es un diccionario
-        print "probabilidad: "+str(probability)
+        print "probability "+str(probability)
+        print "vvariables "+str(variables)
+        
         for variable in variables:
             if variable not in self.variables:
                 return "Variable: "+str(variable)+" no definida"
@@ -105,12 +107,12 @@ class BayesianNetwork ():
         temp = probability[0]
         if len(probability) > 1:
             temp = probability[0]+probability[1]
-        print "numerador: "+str(temp)
+        #print "numerador: "+str(temp)
         num1 = self.getProbability(temp, variables)
         #ya tengo las que no estan no_incluidas
         num2 = 1.0
         if len(probability) > 1:
-            print "probabilidad 2"
+            #print "probabilidad 2"
             v1 = []
             for element in probability[1]:
                 if element[1] not in v1:
@@ -127,7 +129,7 @@ class BayesianNetwork ():
                 notIncluded.append(variable)
 
         if len(notIncluded)==0:#quiere decir que tiene todas las variables
-            print "tiene todas las variables "+str(probability)
+            #print "tiene todas las variables "+str(probability)
             return self.computeProbability(probability)
 
         comb = []
@@ -170,9 +172,25 @@ class BayesianNetwork ():
                     if p not in comb:
                         flag = False
                 if flag:#quiere decir que si estaba adentro
-                    print "se multiplica: "+str(tup[0])+" val: "+str(tup[1])
+                    #print "se multiplica: "+str(tup[0])+" val: "+str(tup[1])
                     val = val * tup[1]#lo multiplico por el valor de esa combinacion
             
         return val
+
+    def getDigraph(self):
+        print self.dictionary
+        edge = []
+        path = []
+        
+        for k, v in self.dictionary.items():
+            if len(v)==0:
+                edge.append(k)
+            else:
+                for element in v:
+                    path.append((element,k))
+        return (edge,path)
+        
+
+                
 
 
