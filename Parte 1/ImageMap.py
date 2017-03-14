@@ -98,7 +98,7 @@ class ImageMap():
             self.pathArray = pathArray
 
     def getColor(self, value):
-        #if value == 5: return (255,99,71,255)
+        if value == 5: return (255,99,71,255)
         if value == 4: return (0, 0, 255, 255)
         if value == 3: return (255, 0, 0, 255)
         if value == 2: return (0, 255, 0, 255)
@@ -115,7 +115,7 @@ class ImageMap():
                 array[i,j] = self.getColor(self.pathArray[j/reference_y][i/reference_x])
         im.save(path)
 
-    def imageUpdatePath(self, path):
+    def imageUpdatePath(self, path, color):
         for val in path:
-            self.pathArray[val[0]][val[1]] = self.colors.get("blue")
+            self.pathArray[val[0]][val[1]] = self.colors.get(color)
 

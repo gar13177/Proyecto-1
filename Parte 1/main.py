@@ -9,9 +9,9 @@ def run(imagePath, blockNumber, searchType):
     if pr.hasError:
         return "error: "+str(pr.error)
     gs = GraphSearch(searchType)
-    path =  gs.graphSearch(pr)
-
+    path, explored =  gs.graphSearch(pr)
+    im.imageUpdatePath(explored,"orange")
     colorPath = path[1:-1]
-    im.imageUpdatePath(colorPath)
+    im.imageUpdatePath(colorPath,"blue")
     im.savePathAsImage(path="path.png")
     return "path.png"

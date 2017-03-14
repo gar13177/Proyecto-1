@@ -56,7 +56,7 @@ class Example(Frame):
         options = OptionMenu(self, self.option, "BFS", "DFS", "A*_1", "A*_2")
         options.place(x=10, y = 400)
 
-        self.scale = Scale(self, from_=10,to=50, orient=HORIZONTAL)
+        self.scale = Scale(self, from_=10,to=200, orient=HORIZONTAL, length = 300)
         self.scale.place(x = 10, y= 350)
         #self.label2 = Label(self, textvariable=self.imagePath,width=40)
         #self.label2.place(x=100, y=10)

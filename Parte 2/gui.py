@@ -115,6 +115,7 @@ class Example(Frame):
             self.text.insert(END, ">> Red correcta\n")
             self.text.config(state=DISABLED)
             self.errors = False
+            self.bn.printFactores()
     
     def doWork(self):
         

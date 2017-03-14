@@ -37,6 +37,7 @@ class BayesianNetwork ():
         for key, value in self.dictionary.iteritems():
             dictionary[key] = self.buildProbabilty(key,value)
         self.bProbabilities = dictionary
+        
             
     
     def buildProbabilty(self, key, value):
@@ -176,6 +177,57 @@ class BayesianNetwork ():
                     val = val * tup[1]#lo multiplico por el valor de esa combinacion
             
         return val
+
+    def printFactores(self):
+        expr = ""
+        
+        for k, v in self.bProbabilities.items():
+            for element in v:
+                k = 0
+                for element2 in element[0]:
+                    if k == 0:
+                        expr += "p("
+                        if element2[0] == 1:
+                            expr+=str(element2[1])#+")"
+                        else:
+                            expr+="!"+str(element2[1])#+")"
+                    elif k == 1:
+                        expr +="|"
+                        if element2[0] == 1:
+                            expr+=str(element2[1])#+")"
+                        else:
+                            expr+="!"+str(element2[1])#+")"
+                    else:
+                        expr +=","
+                        if element2[0] == 1:
+                            expr+=str(element2[1])#+")"
+                        else:
+                            expr+="!"+str(element2[1])#+")"
+                        
+                    k+= 1
+                        
+                expr +=") = "+str(element[1])+"\n"
+                        
+        print expr
+
+        comp = ""
+
+        for k, v in self.dictionary.items():
+            if len(v)==0:
+                comp += "p("+str(k)+")"
+            else:
+                comp += "p("+str(k)+"|"
+                k = 0
+                for element in v:
+                    if k == 0:
+                        comp+=str(element)
+                    else:
+                        comp+=","+str(element)
+                    k+= 1
+                comp+=")"
+        print comp
+
+        
 
     def getDigraph(self):
         print self.dictionary

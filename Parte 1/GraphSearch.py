@@ -38,7 +38,7 @@ class GraphSearch():
             if s not in explored:
                 explored.append(s) 
                 if problem.goalTest(s):
-                    return path
+                    return (path,explored)
                 
                 for a in problem.actions(s):
                     
@@ -51,7 +51,7 @@ class GraphSearch():
                         frontier.append(new_path)
         #else:
             #return []
-        return []
+        return ([],explored)
 
     def gSDFS(self,problem):
         frontier = [[problem.initVal_pos]]
@@ -64,7 +64,7 @@ class GraphSearch():
                 explored.append(s)
 
                 if problem.goalTest(s):
-                    return path
+                    return (path,explored)
 
                 for a in problem.actions(s):
 
@@ -75,6 +75,6 @@ class GraphSearch():
                     new_path.append(result)
                     frontier.append(new_path)
 
-        return []
+        return ([],explored)
                 
                 
