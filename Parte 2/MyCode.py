@@ -23,6 +23,7 @@ class BayesListener(BayesGrammarListener):
 
 
     def enterNumber(self, ctx):
+        print ctx
         return float(ctx.getText())
 
     def enterOperator(self, ctx):
